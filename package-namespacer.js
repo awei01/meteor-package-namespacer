@@ -42,5 +42,46 @@ var __prototype = {
 	action: function(name) {
 		return this.get() + '/' + name;
 	},
+	makeMethods: function(name, method) {
+		var result;
+		switch (true) {
+			case _.isString(name):
+				result = {};
+				mapMethodToObject(result, this.action(name), method);
+				break;
+			case _.isArray(name):
+				result = makeMethodsFromArray.call(this, name);
+				break;
+			default:
+				result = makeMethodsFromObject.call(this, name);
+		}
+		return result;
+	},
 }
+function mapMethodToObject(object, name, method) {
+	if (!_.isFunction(method)) {
+		throwError('invalid-function', 'Invalid function provided', 'Expected a function but got a [' + typeof method + ']');
+	}
+	object[name] = method;
+};
+function makeMethodsFromArray(methods) {
+	var result = {},
+		i = 0, len = methods.length;
+	if (len % 2 !== 0) {
+		throwError('invalid-array', 'Invalid array method map', 'The method map should have an even number of arguments');
+	}
+	for (i; i < len; i += 2) {
+		mapMethodToObject(result, this.action(methods[i]), methods[i + 1]);
+	}
+	return result;
+};
+function makeMethodsFromObject(methods) {
+	var result = {}, k;
+	for (k in methods) {
+		mapMethodToObject(result, this.action(k), methods[k]);
+	}
+	return result;
+}
+
+
 _.extend(PackageNamespacer.prototype, __prototype);

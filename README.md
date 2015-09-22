@@ -114,5 +114,42 @@ console.log(ns.action('some-action'));
 */
 ```
 
+### `object` .makeMethods(`string|object|array` name, [`function` method]) ###
+Returns an object that can be passed to `Meteor.methods()`. It will prefix each method name with the instance's namespace using `.action()` method.
+
+```
+var ns = new PackageNamespacer('foo-namespace');
+var methods = ns.makeMethods('barMethod', doBarMethod);
+/*
+console.log(methods);
+{ "foo-namespace/barMethod": doBarMethod }
+*/
+
+var methods = ns.makeMethods({
+	barMethod: doBarMethod,
+	bazMethod: doBazMethod
+});
+/*
+console.log(methods);
+{
+	"foo-namespace/barMethod": doBarMethod,
+	"foo-namespace/bazMethod": doBazMethod
+}
+*/
+
+var methods = ns.makeMethods([
+	'bar-method', doBarMethod,
+	'baz-method', doBazMethod
+]);
+/*
+console.log(methods);
+{
+	"foo-namespace/bar-method": doBarMethod,
+	"foo-namespace/baz-method": doBazMethod
+}
+*/
+```
+
+
 ## Contribution
 PR's suggestions, bugs welcome. Please add unit tests when creating a PR.

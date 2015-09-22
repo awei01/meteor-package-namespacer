@@ -37,6 +37,54 @@ describe('PackageNamespacer instance', function() {
 		assert.equal(instance.action('some-action'), 'foo-namespace/some-action',
 			'did not return namespaced action');
 	});
+
+	it('.makeMethods() with name and function', function() {
+		var method = function() { };
+		var result = instance.makeMethods('some-action', method);
+		assert.deepEqual(result, { "foo-namespace/some-action": method },
+			'did not return expected methods object');
+	});
+	it('.makeMethods() with object', function() {
+		var method1 = function() { };
+		var method2 = function() { };
+		var result = instance.makeMethods({
+			action1: method1,
+			action2: method2
+		});
+		assert.deepEqual(result, { "foo-namespace/action1": method1, "foo-namespace/action2": method2 },
+			'did not return expected methods object');
+	});
+	it('.makeMethods() with array', function() {
+		var method1 = function() { };
+		var method2 = function() { };
+		var result = instance.makeMethods([
+			'some-action', method1,
+			'other-action', method2
+		]);
+		assert.deepEqual(result, { "foo-namespace/some-action": method1, "foo-namespace/other-action": method2 },
+			'did not return expected methods object');
+	});
+	it('.makeMethods() with name and non-function', function() {
+		assert.throws(function() {
+			instance.makeMethods('action', 'invalid');
+		}, Meteor.Error, 'package-namespacer::invalid-function');
+	});
+	it('.makeMethods() with object having non-function', function() {
+		assert.throws(function() {
+			instance.makeMethods({ action: "invalid" });
+		}, Meteor.Error, 'package-namespacer::invalid-function');
+	});
+	it('.makeMethods() with array having non-function', function() {
+		assert.throws(function() {
+			instance.makeMethods([ 'action', 'invalid' ]);
+		}, Meteor.Error, 'package-namespacer::invalid-function');
+	});
+	it('.makeMethods() with array having wrong number of arguments', function() {
+		assert.throws(function() {
+			instance.makeMethods([ 'action' ]);
+		}, Meteor.Error, 'package-namespacer::invalid-array');
+	});
+
 	it('instantiated with non-string', function() {
 		assert.throws(function() {
 			new PackageNamespacer({});
