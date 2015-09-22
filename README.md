@@ -2,6 +2,10 @@
 
 This is a package to help with managing namespaces in your packages in an opinionated fashion.
 
+## Motivation
+
+This is an attempt to reduce boilerplate namespacing code in package development. It will allow for namespacing `Meteor.Error` and `Meteor.methods`.
+
 ## Usage
 
 Suppose you're creating a new `Foo` package. In your package's `package.js`:
@@ -19,8 +23,8 @@ Package.onUse(function(api) {
 	// your files will now have access to the global variable Foo
 
 	api.export('Foo');
-});```
-
+});
+```
 
 ## API
 
