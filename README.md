@@ -39,6 +39,7 @@ PackageNamespacer.makeFor(Foo, 'foo-namespace`);
 console.log(Foo);
 { __ns__: (instance of PackageNamespacer) }
 */
+```
 
 ### `instance` PackageNamespacer(`string` namespace) ###
 
@@ -69,6 +70,7 @@ var ns = new PackageNamespacer('foo-namespace');
 console.log(ns);
 "foo-namespace"
 */
+```
 
 ### `string` .error(`string` name) ###
 Create a namespaced error name.
