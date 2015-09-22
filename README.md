@@ -1,6 +1,6 @@
 # PackageNamespacer
 
-This is a package to help with managing namespaces in your packages in an opinionated fashion.
+This is a package to help with managing namespaces in your packages in an opinionated fashion. https://atmospherejs.com/awei01/package-namespacer
 
 ## Motivation
 
