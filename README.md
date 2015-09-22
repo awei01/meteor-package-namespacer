@@ -14,16 +14,28 @@ Suppose you're creating a new `Foo` package. In your package's `package.js`:
 Package.onUse(function(api) {
 	// other code
 	api.use('awei01:package-namespacer');
+	// still other code
 
-	// you can create your global Foo export inline here
-	Foo = {};
-	PackageNamespacer.makeFor(Foo, 'foo-namespace');
+	// include our files
+	api.addFiles('foo.js');
 
-	// include other files
-	// your files will now have access to the global variable Foo
-
+	// export the variable
 	api.export('Foo');
 });
+```
+
+Then, in your package definition code (`foo.js`):
+```
+Foo = {};
+PackageNamespacer.makeFor(Foo, 'foo-namespace');
+// will yield { __ns__: (instance of PackageNamespacer )}
+
+// or
+
+Foo = {};
+Foo.myNSKey = new PackageNamespacer('foo-namespace');
+// will yield { myNSKey: (instance of PackageNamespacer )}
+
 ```
 
 ## API
