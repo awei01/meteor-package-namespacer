@@ -96,11 +96,15 @@ describe('PackageNamespacer instance', function() {
 describe('PackageNamespacer.makeFor()', function() {
 	it('when called with object and namespace', function() {
 		var pkg = {};
-		PackageNamespacer.makeFor(pkg, 'foo-namespace');
+
+		var result = PackageNamespacer.makeFor(pkg, 'foo-namespace');
+
 		assert.instanceOf(pkg.__ns__, PackageNamespacer,
 			'did not set .__ns__ as instance of PackageNamespacer');
 		assert.equal(pkg.__ns__ + '', 'foo-namespace',
 			'did not set the namespace on the instance');
+		assert.equal(pkg.__ns__, result,
+			'did not return the instance');
 	});
 	it('when called with function and namespace', function() {
 		var pkg = function() {};

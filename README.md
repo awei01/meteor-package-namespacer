@@ -40,13 +40,13 @@ Foo.myNSKey = new PackageNamespacer('foo-namespace');
 
 ## API
 
-### `void` PackageNamespacer.makeFor(`object|function` object, `string` namespace, [`string` key]) ###
+### `instance` PackageNamespacer.makeFor(`object|function` object, `string` namespace, [`string` key]) ###
 
 Add a namespace helper to your package. By default, the property key for the `PackageNamespacer` instance will be `.__ns__`.
 
 ```
 Foo = {};
-PackageNamespacer.makeFor(Foo, 'foo-namespace`);
+var ns = PackageNamespacer.makeFor(Foo, 'foo-namespace`);
 /*
 console.log(Foo);
 { __ns__: (instance of PackageNamespacer) }

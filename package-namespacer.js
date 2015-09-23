@@ -17,7 +17,7 @@ PackageNamespacer.makeFor = function(object, namespace, key) {
 	if (_.has(object, key)) {
 		throwError('invalid-key', 'Key already in use', 'The key [' + key + '] is already defined');
 	}
-	object[key] = new PackageNamespacer(namespace);
+	return object[key] = new PackageNamespacer(namespace);
 };
 
 function throwError(code, reason, details) {
